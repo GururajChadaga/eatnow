@@ -3,18 +3,18 @@ import Input from '../../UI/Input';
 import { useRef } from 'react';
 
 const MealItemForm = (props) => {
-  const amountInputRef = useRef();
+  const quantityInputRef = useRef();
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onAddToCart(+amountInputRef.current.value);
+    props.onAddToCart(+quantityInputRef.current.value);
   };
   return (
     <form className={classes.form} onSubmit={submitHandler}>
       <Input
-        ref={amountInputRef}
-        label='Amount'
+        ref={quantityInputRef}
+        label='Quantity'
         input={{
-          id: `amount_${props.id}`,
+          id: `quantity_${props.id}`,
           type: 'number',
           min: '1',
           max: '5',
