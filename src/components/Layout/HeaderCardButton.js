@@ -5,7 +5,6 @@ import CartContext from '../../store/cart-context';
 
 const HeaderCardButton = (props) => {
   const cartCtx = useContext(CartContext);
-  console.log(cartCtx)
   const numberOfCartItems = cartCtx.items.reduce((currNumber, item) => {
     return currNumber + item.amount;
   }, 0);
