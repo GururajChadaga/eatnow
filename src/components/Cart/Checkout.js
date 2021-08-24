@@ -60,6 +60,12 @@ const Checkout = (props) => {
       cityBlurHandler();
       return;
     }
+    props.onConfirm({
+      name,
+      street,
+      postalCode,
+      city,
+    });
     resetName();
     resetStreet();
     resetPostalCode();

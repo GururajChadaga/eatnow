@@ -27,6 +27,15 @@ const Cart = (props) => {
     setShowCheckout(false);
   };
 
+  const submitOrderHandler = (userData) => {
+    const ordersUrl =
+      'firebaselink/orders.json';
+    fetch(ordersUrl, {
+      method: 'POST',
+      body: JSON.stringify({ user: userData, orderedItems: cartCtx.items }),
+    });
+  };
+
   const cartItems = (
     <ul className={classes['cart-items']}>
       {cartCtx.items.map((item) => (
@@ -62,7 +71,10 @@ const Cart = (props) => {
         <span>{totalPrice}</span>
       </div>
       {showCheckout && hasItems && (
-        <Checkout onCancel={cancelCheckoutHandler} />
+        <Checkout
+          onConfirm={submitOrderHandler}
+          onCancel={cancelCheckoutHandler}
+        />
       )}
       {(!showCheckout || !hasItems) && modalActions}
     </Modal>
