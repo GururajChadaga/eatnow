@@ -39,6 +39,7 @@ const Cart = (props) => {
     });
     setIsOrdering(false);
     setOrderPlaced(true);
+    cartCtx.clearCart();
   };
 
   const cartItems = (
