@@ -1,13 +1,15 @@
 import Modal from '../UI/Modal';
 import classes from './Cart.module.css';
 import CartItem from './CartItem';
-import { useContext, useState } from 'react';
+import { Fragment, useContext, useState } from 'react';
 import CartContext from '../../store/cart-context';
 import Checkout from './Checkout';
 
 const Cart = (props) => {
   const [showCheckout, setShowCheckout] = useState(false);
   const cartCtx = useContext(CartContext);
+  const [isOrdering, setIsOrdering] = useState(false);
+  const [orderPlaced, setOrderPlaced] = useState(false);
   const totalPrice = `$${cartCtx.totalPrice.toFixed(2)}`;
   const hasItems = cartCtx.items.length > 0;
 
@@ -27,13 +29,16 @@ const Cart = (props) => {
     setShowCheckout(false);
   };
 
-  const submitOrderHandler = (userData) => {
+  const submitOrderHandler = async (userData) => {
     const ordersUrl =
       'firebaselink/orders.json';
-    fetch(ordersUrl, {
+    setIsOrdering(true);
+    await fetch(ordersUrl, {
       method: 'POST',
       body: JSON.stringify({ user: userData, orderedItems: cartCtx.items }),
     });
+    setIsOrdering(false);
+    setOrderPlaced(true);
   };
 
   const cartItems = (
@@ -63,8 +68,8 @@ const Cart = (props) => {
     </div>
   );
 
-  return (
-    <Modal onClose={props.onClose}>
+  const cartModalContent = (
+    <Fragment>
       {!showCheckout && cartItems}
       <div className={classes.total}>
         <span>Total Price</span>
@@ -77,6 +82,26 @@ const Cart = (props) => {
         />
       )}
       {(!showCheckout || !hasItems) && modalActions}
+    </Fragment>
+  );
+
+  const orderingModalContent = <p>Ordering...</p>;
+  const orderPlacedModalContent = (
+    <Fragment>
+      <p>Your order has been placed.</p>
+      <div className={classes.actions}>
+        <button className={classes.button} onClick={props.onClose}>
+          Close
+        </button>
+      </div>
+    </Fragment>
+  );
+
+  return (
+    <Modal onClose={props.onClose}>
+      {!isOrdering && !orderPlaced && cartModalContent}
+      {isOrdering && orderingModalContent}
+      {orderPlaced && orderPlacedModalContent}
     </Modal>
   );
 };
