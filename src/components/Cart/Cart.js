@@ -31,7 +31,7 @@ const Cart = (props) => {
 
   const submitOrderHandler = async (userData) => {
     const ordersUrl =
-      'firebaselink/orders.json';
+    `${process.env.REACT_APP_EATNOW_API}/orders.json`;
     setIsOrdering(true);
     await fetch(ordersUrl, {
       method: 'POST',

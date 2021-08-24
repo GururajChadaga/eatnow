@@ -10,7 +10,7 @@ const AvailableMeals = () => {
   useEffect(() => {
     const fetchMeals = async () => {
       setIsLoading(true);
-      const mealsUrl = 'firebaselink/meals.json';
+      const mealsUrl = `${process.env.REACT_APP_EATNOW_API}/meals.json`;
       const response = await fetch(mealsUrl);
       if (!response.ok) {
         throw new Error('Something went wrong!');
