@@ -11,7 +11,7 @@ const AvailableMeals = () => {
     const fetchMeals = async () => {
       setIsLoading(true);
       const url =
-        'https://eatnow-b7e06-default-rtdb.firebaseio.com//meals.json';
+        'firebaselink/meals.json';
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error('Something went wrong!');
