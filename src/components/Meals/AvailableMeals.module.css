@@ -1,4 +1,3 @@
-
 .meals {
   max-width: 60rem;
   width: 90%;
@@ -10,6 +9,18 @@
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+.MealsLoading {
+  text-align: center;
+  color: white;
+  margin-top: 1.25rem;
+}
+
+.MealsError {
+  text-align: center;
+  color: red;
+  margin-top: 1.25rem;
 }
 
 @keyframes meals-appear {
