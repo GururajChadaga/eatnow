@@ -46,8 +46,20 @@ const Checkout = (props) => {
     reset: resetCity,
   } = useInput(isNotEmpty);
 
+  let formIsValid = true;
+  formIsValid =
+    nameIsValid && streetIsValid && postalCodeIsValid && cityIsValid;
+
   const confirmHandler = (event) => {
     event.preventDefault();
+
+    if (!formIsValid) {
+      nameBlurHandler();
+      streetBlurHandler();
+      postalCodeBlurHandler();
+      cityBlurHandler();
+      return;
+    }
     resetName();
     resetStreet();
     resetPostalCode();
