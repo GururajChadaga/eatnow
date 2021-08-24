@@ -1,27 +1,113 @@
 import classes from './Checkout.module.css';
+import useInput from '../../hooks/useInput';
+
+const isNotEmpty = (value) => {
+  return value.trim() !== '';
+};
+
+const isFiveChars = (value) => {
+  return value.trim().length === 5;
+};
 
 const Checkout = (props) => {
+  const {
+    value: name,
+    isValid: nameIsValid,
+    hasError: nameHasError,
+    inputBlurHandler: nameBlurHandler,
+    inputChangeHandler: nameChangeHandler,
+    reset: resetName,
+  } = useInput(isNotEmpty);
+
+  const {
+    value: street,
+    isValid: streetIsValid,
+    hasError: streetHasError,
+    inputBlurHandler: streetBlurHandler,
+    inputChangeHandler: streetChangeHandler,
+    reset: resetStreet,
+  } = useInput(isNotEmpty);
+
+  const {
+    value: postalCode,
+    isValid: postalCodeIsValid,
+    hasError: postalCodeHasError,
+    inputBlurHandler: postalCodeBlurHandler,
+    inputChangeHandler: postalCodeChangeHandler,
+    reset: resetPostalCode,
+  } = useInput(isFiveChars);
+
+  const {
+    value: city,
+    isValid: cityIsValid,
+    hasError: cityHasError,
+    inputBlurHandler: cityBlurHandler,
+    inputChangeHandler: cityChangeHandler,
+    reset: resetCity,
+  } = useInput(isNotEmpty);
+
   const confirmHandler = (event) => {
     event.preventDefault();
+    resetName();
+    resetStreet();
+    resetPostalCode();
+    resetCity();
   };
+
+  const nameClasses = nameHasError
+    ? `${classes.control} ${classes.invalid}`
+    : classes.control;
+  const streetClasses = streetHasError
+    ? `${classes.control} ${classes.invalid}`
+    : classes.control;
+  const postalCodeClasses = postalCodeHasError
+    ? `${classes.control} ${classes.invalid}`
+    : classes.control;
+  const cityClasses = cityHasError
+    ? `${classes.control} ${classes.invalid}`
+    : classes.control;
 
   return (
     <form className={classes.form} onSubmit={confirmHandler}>
-      <div className={classes.control}>
+      <div className={nameClasses}>
         <label htmlFor='name'>Your Name</label>
-        <input type='text' id='name' />
+        <input
+          type='text'
+          id='name'
+          value={name}
+          onChange={nameChangeHandler}
+          onBlur={nameBlurHandler}
+        />
       </div>
-      <div className={classes.control}>
+      <div className={streetClasses}>
         <label htmlFor='street'>Street</label>
-        <input type='text' id='street' />
+        <input
+          type='text'
+          id='street'
+          value={street}
+          onChange={streetChangeHandler}
+          onBlur={streetBlurHandler}
+        />
       </div>
-      <div className={classes.control}>
+      <div className={postalCodeClasses}>
         <label htmlFor='postal'>Postal Code</label>
-        <input type='text' id='postal' />
+        <input
+          type='text'
+          id='postal'
+          value={postalCode}
+          onChange={postalCodeChangeHandler}
+          onBlur={postalCodeBlurHandler}
+        />
       </div>
-      <div className={classes.control}>
+      <div className={cityClasses}>
         <label htmlFor='city'>City</label>
-        <input type='text' id='city' />
+        <input
+          type='text'
+          id='city'
+          value={city}
+          onChange={cityChangeHandler}
+          onBlur={cityBlurHandler}
+        />
       </div>
       <div className={classes.actions}>
         <button
